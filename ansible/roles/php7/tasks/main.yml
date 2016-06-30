@@ -1,0 +1,29 @@
+- name: Install PHP Packages
+  sudo: yes
+  yum: pkg={{ item }} state=latest
+  with_items: '{{php.packages}}'
+
+- name: Install PHP-Pecl Packages
+  sudo: yes
+  yum: pkg={{ item }} state=latest
+  with_items: '{{php.pecl_packages}}'
+
+  #Add templates
+- name: Change to custom php.ini
+  sudo: yes
+  template: src=php-dev.ini.tpl dest=/etc/php-dev.ini
+
+#Add templates
+- name: Change to custom php.ini
+  sudo: yes
+  template: src=php-prod.ini.tpl dest=/etc/php-prod.ini
+
+  #Add templates
+- name: Change to custom opcache config
+  sudo: yes
+  template: src=10-opcache.ini.tpl dest=/etc/php.d/10-opcache.ini
+
+  #Add templates
+- name: Change to custom php-fpm config
+  sudo: yes
+  template: src=www.conf.tpl dest=/etc/php-fpm.d/www.conf

@@ -1,0 +1,13 @@
+---
+- name: Add MongoDB Repo
+  sudo: yes
+  template: src=mongodb-org-3.2.repo dest=/etc/yum.repos.d/mongodb-org-3.2.repo
+
+- name: Install MongoDB
+  sudo: yes
+  yum: pkg=mongodb-org state=latest
+
+- name: Creates data directory
+  file: path=/data/db state=directory
+
+- pear: name=pecl/mongodb state=latest

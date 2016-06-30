@@ -1,0 +1,21 @@
+---
+- name: Install System Packages
+  sudo: yes
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - git
+    - wget
+    - vim
+    - sudo
+    - openssl-devel
+
+- name: Configure the timezone
+  sudo: yes
+  template: src=timezone.tpl dest=/etc/timezone
+
+- name: Allow root to not require password to perform commands
+  sudo: yes
+  template: src=mysudoers.tpl dest=/etc/sudoers.d/mysudoers
+
+- name: install the 'Development tools' package group
+  yum: name="@Development tools" state=present

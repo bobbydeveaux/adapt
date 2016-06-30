@@ -1,0 +1,11 @@
+---
+- name: Install System Packages
+  sudo: yes
+  yum: pkg={{ item }} state=latest
+  with_items:
+    - redis
+
+  #Add templates
+- name: Change to custom redis.conf
+  sudo: yes
+  template: src=redis.conf.tpl dest=/etc/redis.conf

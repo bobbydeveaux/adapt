@@ -1,0 +1,13 @@
+---
+- hosts: all
+  sudo: true
+  vars_files:
+    - "group_vars/settings.yml"
+  roles:
+    - init
+    - server
+    - php7
+    - mongodb
+    - nginx
+    - supervisord
+    - redis

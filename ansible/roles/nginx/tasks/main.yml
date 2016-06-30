@@ -1,0 +1,16 @@
+---
+- name: Add Nginx repo
+  yum: name=http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm state=present
+
+- name: Install Nginx
+  sudo: yes
+  yum: pkg=nginx state=latest
+
+#Add templates
+- name: Change to custom Nginx conf
+  sudo: yes
+  template: src=nginx.conf.tpl dest=/etc/nginx/nginx.conf
+
+- name: Add default vhost
+  sudo: yes
+  template: src=default.conf.tpl dest=/etc/nginx/conf.d/default.conf

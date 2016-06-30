@@ -1,0 +1,8 @@
+- name: Install Supervisord
+  sudo: yes
+  yum: pkg=supervisor state=latest
+
+  #Add templates
+- name: Change to custom Supervisord conf
+  sudo: yes
+  template: src=supervisord.conf.tpl dest=/etc/supervisord.conf

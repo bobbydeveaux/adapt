@@ -1,0 +1,24 @@
+# specifying build image
+build_image: drydock/u14php7all:tip
+
+# language setting
+language: php
+
+# specifying runtime
+php:
+   '7.0'
+
+build:
+
+  pre_ci:
+    #- curl -v https://releases.hashicorp.com/packer/0.10.1/packer_0.10.1_linux_amd64.zip --output packer.zip
+    #- unzip -oq packer.zip -d /usr/local/bin
+    #- ./build.sh
+
+integrations:
+  hub:
+    - integrationName: "DockerHub"
+      type: docker
+      branches:
+        only:
+          - master

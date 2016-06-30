@@ -1,0 +1,62 @@
+{
+  "_comment": "Template file pulling from centos7",
+  "variables": {
+    "docker_login_email":    "bobby@dvomedia.net",
+    "docker_login_username": "bobbydvo",
+    "docker_login_password": "Lr6n9hrGBLNxBm"
+  },
+  "builders": [
+    {
+      "type": "docker",
+      "image": "centos:latest",
+      "commit": true
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "rpm -iUvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-7.noarch.rpm",
+        "yum -y update",
+        "yum -y install ansible",
+        "ansible --version"
+      ]
+    },{
+      "type": "ansible-local",
+      "playbook_file": "./ansible/playbook.yml",
+      "role_paths": [
+          "./ansible/roles/init",
+          "./ansible/roles/server",
+          "./ansible/roles/mongodb",
+          "./ansible/roles/php7",
+          "./ansible/roles/nginx",
+          "./ansible/roles/supervisord",
+          "./ansible/roles/redis"
+      ],
+      "group_vars": "./ansible/common/group_vars"
+    },{
+      "type": "shell",
+      "inline": [
+        "usermod -u 1000 apache",
+        "cd /srv && chown -R apache:apache .",
+        "curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer"
+      ]
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "bobbydvo/packer-lemp",
+        "tag": "latest"
+      },
+      {
+          "type": "docker-push",
+          "login": true,
+          "login_email":    "{{ user `docker_login_email`}}",
+          "login_username": "{{ user `docker_login_username`}}",
+          "login_password": "{{ user `docker_login_password`}}"
+      }
+    ]
+  ]
+}

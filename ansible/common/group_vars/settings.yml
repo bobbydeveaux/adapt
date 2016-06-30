@@ -1,0 +1,4 @@
+---
+php:
+    packages: ["php", "php-fpm", "php-common", "php-mbstring", "php-mcrypt", "php-devel", "php-xml","php-mysqlnd", "php-pdo", "php-opcache", "php-bcmath", "php-pear"]
+    pecl_packages: ["php-pecl-memcached", "php-pecl-redis", "php-pecl-zip", "php-pecl-xdebug"]
