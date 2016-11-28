@@ -26,4 +26,4 @@ php_value[session.save_handler] = files
 php_value[session.save_path]    = /var/lib/php/session
 php_value[soap.wsdl_cache_dir]  = /var/lib/php/wsdlcache
 
-## Blank Line for additional config
+; Blank Line for additional config
